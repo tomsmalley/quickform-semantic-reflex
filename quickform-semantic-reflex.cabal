@@ -1,0 +1,70 @@
+name:                quickform-semantic-reflex
+version:             0.1.0
+license:             BSD3
+license-file:        LICENSE
+synopsis:            Type level HTML forms
+description:         This library provides core utilities for describing and
+                     validating HTML forms in haskell web applications.
+author:              Tom Smalley
+maintainer:          tfsmalley@gmail.com
+category:            Web
+build-type:          Simple
+cabal-version:       >=1.10
+
+extra-source-files: LICENSE
+
+flag NoErrors
+  description: Turns off custom type errors
+  default: False
+
+library
+  default-language:    Haskell2010
+  hs-source-dirs:      src
+  ghc-options:         -Wall
+  if flag(NoErrors)
+    cpp-options:       -DNO_FANCY_ERRORS
+
+  exposed-modules:     QuickForm.Reflex.SemanticUI
+  build-depends:       base >= 4.9 && < 5
+                     , aeson
+                     , containers
+                     , deepseq
+                     , data-default
+                     , lens
+                     , mtl
+                     , quickform
+                     , reflex
+                     , reflex-dom
+                     , semantic-reflex
+                     , text
+
+  default-extensions:  ConstraintKinds
+                     , DataKinds
+                     , FlexibleInstances
+                     , FlexibleContexts
+                     , MultiParamTypeClasses
+                     , ScopedTypeVariables
+                     , TypeApplications
+                     , TypeOperators
+
+executable quickform-semantic-reflex-example
+  hs-source-dirs:     .
+  main-is:            Example.hs
+  build-depends:
+      base
+    , containers
+    , jsaddle
+    , lens
+    , mtl
+    , quickform
+    , quickform-semantic-reflex
+    , reflex-dom-core
+    , semantic-reflex
+    , text
+  if !impl(ghcjs)
+    build-depends: semantic-reflex
+  ghc-options: -threaded -Wall -fwarn-tabs -funbox-strict-fields -O2
+  if impl(ghcjs)
+    ghc-options: -dedupe
+  default-language:    Haskell2010
+

@@ -1,0 +1,5 @@
+*.swp
+*.swo
+*.tix
+.DS_Store
+.stack-work
